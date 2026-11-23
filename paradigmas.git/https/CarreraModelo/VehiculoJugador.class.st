@@ -9,8 +9,10 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'carril',
+		'vidas',
 		'velocidad',
-		'tieneEscudo'
+		'tieneEscudo',
+		'tiempoPenalizacionPozo'
 	],
 	#category : 'CarreraModelo',
 	#package : 'CarreraModelo'
@@ -19,6 +21,14 @@ Class {
 { #category : 'actions' }
 VehiculoJugador >> activarEscudo [
 	tieneEscudo := true.
+]
+
+{ #category : 'actions' }
+VehiculoJugador >> actualizarPenalizacionConPaso: milisegundos [
+	tiempoPenalizacionPozo > 0 ifTrue: [
+		tiempoPenalizacionPozo := (tiempoPenalizacionPozo - milisegundos) max: 0.
+		tiempoPenalizacionPozo = 0 ifTrue: [ velocidad := 10 ].
+	].
 ]
 
 { #category : 'accessing' }
@@ -33,10 +43,11 @@ VehiculoJugador >> consumirEscudo [
 
 { #category : 'initialization' }
 VehiculoJugador >> initialize [
-	super initialize.
 	carril := 2.
-	velocidad := 25.
+	vidas := 3.
+	velocidad := 10.
 	tieneEscudo := false.
+	tiempoPenalizacionPozo := 0.
 ]
 
 { #category : 'actions' }
@@ -57,8 +68,11 @@ VehiculoJugador >> moverIzquierda [
 
 { #category : 'actions' }
 VehiculoJugador >> reducirVelocidad [
-	tieneEscudo ifTrue: [ ^ self ].
-	velocidad := (velocidad - 5) max: 2.
+	tieneEscudo ifTrue: [
+		self consumirEscudo.
+		^ self ].
+	velocidad := (velocidad - 2) max: 2.
+	tiempoPenalizacionPozo := 2000.
 ]
 
 { #category : 'accessing' }
@@ -69,4 +83,9 @@ VehiculoJugador >> tieneEscudo [
 { #category : 'accessing' }
 VehiculoJugador >> velocidad [
 	^ velocidad 
+]
+
+{ #category : 'accessing' }
+VehiculoJugador >> velocidad: unValor [
+	velocidad := unValor
 ]

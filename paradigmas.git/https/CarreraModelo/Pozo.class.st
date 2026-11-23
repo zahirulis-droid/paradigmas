@@ -12,8 +12,12 @@ Class {
 
 { #category : 'gameplay' }
 Pozo >> aplicarPenalizacionEn: unJuego [
-	unJuego sumarTiempo: 20.
+	unJuego jugador tieneEscudo ifTrue: [
+		unJuego jugador consumirEscudo.
+		^ self ].
 	unJuego jugador reducirVelocidad.
+	unJuego sumarTiempo: 15.
+	
 ]
 
 { #category : 'accessing' }

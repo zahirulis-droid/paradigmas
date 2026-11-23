@@ -310,18 +310,19 @@ CarreraMorph >> mouseEnter: anEvent [
 CarreraMorph >> step [
 	juego estaEnJuego ifTrue: [
 		juego tick.
+		juego jugador actualizarPenalizacionConPaso: self stepTime.
 		lineasPistaOffset := (lineasPistaOffset + 25) rem: 40.
-		lineaLargadaY <= self height ifTrue: [
-			lineaLargadaY := lineaLargadaY + 25.
-		].
+		(lineaLargadaY ifNil: [ 395 ]) <= self height ifTrue: [
+			lineaLargadaY := (lineaLargadaY ifNil: [ 395 ]) + 25 ].
 	].
 	self changed.
 ]
 
 { #category : 'stepping' }
 CarreraMorph >> stepTime [
-	| tiempoTranscurrido velocidadActual |
+	| tiempoTranscurrido baseTiempo penalizacionPozo |
 	tiempoTranscurrido := 400 - juego tiemporestante.
-	velocidadActual := 130 - (tiempoTranscurrido * 2).
-	^ velocidadActual max: 35
+	baseTiempo := (130 - (tiempoTranscurrido * 2)) max: 35.
+	penalizacionPozo := (10 - juego jugador velocidad) max: 0.
+	^ (baseTiempo + (penalizacionPozo * 15)) min: 230
 ]
