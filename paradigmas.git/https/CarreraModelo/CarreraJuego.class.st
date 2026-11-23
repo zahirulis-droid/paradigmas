@@ -13,7 +13,8 @@ Class {
 		'jugador',
 		'pista',
 		'obstaculos',
-		'estado'
+		'estado',
+		'puntos'
 	],
 	#category : 'CarreraModelo',
 	#package : 'CarreraModelo'
@@ -32,18 +33,20 @@ CarreraJuego >> estado [
 { #category : 'gameplay' }
 CarreraJuego >> generarObstaculo [
 	| hayEspacioLibre azar nuevoElemento |
-	"Verifica que todos los elementos actuales hayan bajado al menos 140 px (2 autos de alto)"
 	hayEspacioLibre := obstaculos allSatisfy: [ :elem | elem posicionY >= 140 ].
 	hayEspacioLibre ifFalse: [ ^ self ].
 
 	azar := 10 atRandom.
-	azar <= 4 ifTrue: [
+	azar <= 6 ifTrue: [
 		nuevoElemento := (azar = 1)
 			ifTrue: [ ItemEscudo new ]
 			ifFalse: [
-				(2 atRandom = 1)
-					ifTrue: [ AutoEnemigo new ]
-					ifFalse: [ Pozo new ] ].
+				(azar <= 3)
+					ifTrue: [ ItemMoneda new ]
+					ifFalse: [
+						(2 atRandom = 1)
+							ifTrue: [ AutoEnemigo new ]
+							ifFalse: [ Pozo new ] ] ].
 		obstaculos add: nuevoElemento.
 	].
 ]
@@ -52,7 +55,8 @@ CarreraJuego >> generarObstaculo [
 CarreraJuego >> initialize [
 	super initialize.
 	vidas := 3.
-	tiemporestante := 120. "Tiempo X estipulado para la victoria"
+	tiemporestante := 400. "Tiempo X estipulado para la victoria"
+	puntos:= 0.
 	jugador := VehiculoJugador new.
 	pista := Pista new.
 	obstaculos := OrderedCollection new.
@@ -75,6 +79,11 @@ CarreraJuego >> obstaculos [
 	^ obstaculos
 ]
 
+{ #category : 'accessing' }
+CarreraJuego >> puntos [
+	^ puntos
+]
+
 { #category : 'gameplay' }
 CarreraJuego >> restarTiempo: unosSegundos [
 	tiemporestante := (tiemporestante - unosSegundos) max: 0.
@@ -88,6 +97,11 @@ CarreraJuego >> restarVida [
 	].
 	vidas := vidas - 1.
 	vidas <= 0 ifTrue: [ estado := #derrota ].
+]
+
+{ #category : 'gameplay' }
+CarreraJuego >> sumarPuntos: unosPuntos [
+	puntos := puntos + unosPuntos.
 ]
 
 { #category : 'gameplay' }

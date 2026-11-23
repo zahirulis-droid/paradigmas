@@ -16,7 +16,7 @@ Class {
 	#package : 'CarreraModelo'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'actions' }
 VehiculoJugador >> activarEscudo [
 	tieneEscudo := true.
 ]
@@ -26,7 +26,7 @@ VehiculoJugador >> carril [
 	^ carril
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'actions' }
 VehiculoJugador >> consumirEscudo [
 	tieneEscudo := false.
 ]
