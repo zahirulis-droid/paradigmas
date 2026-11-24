@@ -27,3 +27,16 @@ Contiene las reglas de negocio, mecánicas de movimiento, colisiones, gestión d
 ### Paquete CarreraUI
 
 **CarreraMorph:** Vista 2D encargada de renderizar la pista de 3 carriles con desplazamiento continuo (drawOn:), dibujar el vehículo del jugador (con aura celeste cuando el escudo está activo), representar polimórficamente los elementos mediante colorVisual, capturar eventos de teclado (keyStroke:) y ejecutar el bucle visual mediante step y stepTime.
+
+## 2. Requisitos previos
+
+* Pharo Launcher o la máquina virtual de Pharo instalada en el sistema.
+* No requiere librerías externas: utiliza exclusivamente el núcleo de Pharo y el framework nativo Morphic.
+
+## 3. Cómo ejecutar el juego
+
+### Ejecución directa desde el archivo `.image`   
+
+1. Abre Pharo Launcher.
+2. Arrastra la imagen entregada hasta el launcher.
+3. El juego arrancará automáticamente en pantalla sin necesidad de abrir ventanas de desarrollo.
