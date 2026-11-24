@@ -17,6 +17,13 @@ Class {
 	#package : 'CarreraUI'
 }
 
+{ #category : 'system startup' }
+CarreraMorph class >> startUp: resuming [
+    resuming ifFalse: [ ^ self ].
+    World closeAllWindowsDiscardingChanges.
+    self new openInWorld
+]
+
 { #category : 'drawing' }
 CarreraMorph >> drawOn: aCanvas [
 	| anchoCarril jugadorX jugadorRect rosaOscuro |
